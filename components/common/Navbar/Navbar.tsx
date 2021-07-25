@@ -1,53 +1,70 @@
 import { FC } from 'react'
 import Link from 'next/link'
-import s from './Navbar.module.css'
 import NavbarRoot from './NavbarRoot'
+import Image, { ImageProps } from 'next/image'
 import { Logo, Container } from '@components/ui'
 import { Searchbar, UserNav } from '@components/common'
+import HomeIcon from '@material-ui/icons/Home';
+import Box from '@material-ui/core/Box';
+import Hidden from '@material-ui/core/Hidden';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import useStyles from './style'
 
 interface Link {
   href: string
   label: string
 }
 interface NavbarProps {
-  links?: Link[]
+  links?: Link[],
 }
 
-const Navbar: FC<NavbarProps> = ({ links }) => (
-  <NavbarRoot>
-    <Container>
-      <div className={s.nav}>
-        <div className="flex items-center flex-1">
-          <Link href="/">
-            <a className={s.logo} aria-label="Logo">
-              <Logo />
-            </a>
-          </Link>
-          <nav className={s.navMenu}>
-            <Link href="/search">
-              <a className={s.link}>All</a>
-            </Link>
-            {links?.map((l) => (
-              <Link href={l.href} key={l.href}>
-                <a className={s.link}>{l.label}</a>
-              </Link>
-            ))}
-          </nav>
-        </div>
-        {process.env.COMMERCE_SEARCH_ENABLED && (
-          <div className="justify-center flex-1 hidden lg:flex">
-            <Searchbar />
-          </div>
-        )}
-        <div className="flex items-center justify-end flex-1 space-x-8">
-          <UserNav />
-        </div>
-      </div>
-      <div className="flex pb-4 lg:px-6 lg:hidden">
-        <Searchbar id="mobile-search" />
-      </div>
-    </Container>
-  </NavbarRoot>
-)
+const logoImage = '/assets/mobile/logo.png'
 
+const Navbar: FC<NavbarProps> = ({ links }) => {
+  const classes = useStyles()
+
+  return <NavbarRoot>
+
+    <Box className={classes.nav + " px-8 lg:px-16 xl:px32"}>
+      <Link href="/">
+        <Image
+          quality="85"
+          src={logoImage}
+          alt='Titus logo'
+          height={40}
+          width={88}
+          layout="fixed"
+        />
+      </Link>
+
+      <Hidden lgUp>
+        <Box className="flex items-center lg:px-6">
+          <HomeIcon className={classes.homeIcon} />
+
+          <Link href="/profile">
+            <Button className={classes.button + "  ml-4"}>
+              Sản phẩm
+            </Button>
+          </Link>
+        </Box>
+      </Hidden>
+
+      <Hidden mdDown>
+        <Box className="flex items-center lg:px-6">
+          <Link href="/profile">
+            <Button className={classes.button}>
+              Trang chủ
+            </Button>
+          </Link>
+          <Link href="/profile">
+            <Button className={classes.button + "  ml-4"}>
+              Sản phẩm
+            </Button>
+          </Link>
+        </Box>
+      </Hidden>
+    </Box>
+  </NavbarRoot>
+}
 export default Navbar
