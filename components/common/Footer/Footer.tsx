@@ -10,6 +10,7 @@ import { I18nWidget } from '@components/common'
 import Image from 'next/image'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
 import useStyles from './style'
 
 import s from './Footer.module.css'
@@ -40,7 +41,7 @@ const Footer: FC<Props> = ({ className, pages }) => {
   return (
     <footer className={rootClassName}>
       <Box className={classes.social}>
-        <Box className="mx-6 flex items-center">
+        <Box className="mx-6 flex items-center cursor-pointer">
           <Image
             quality="85"
             src={fbIcon}
@@ -51,7 +52,7 @@ const Footer: FC<Props> = ({ className, pages }) => {
           />
         </Box>
 
-        <Box className="mx-6 flex items-center">
+        <Box className="mx-6 flex items-center cursor-pointer">
           <Image
             quality="85"
             src={insIcon}
@@ -62,7 +63,7 @@ const Footer: FC<Props> = ({ className, pages }) => {
           />
         </Box>
 
-        <Box className="mx-6 flex items-center">
+        <Box className="mx-6 flex items-center cursor-pointer">
           <Image
             quality="85"
             src={pinterestIcon}
@@ -75,23 +76,32 @@ const Footer: FC<Props> = ({ className, pages }) => {
       </Box>
 
       <Box className={classes.contact} >
-        <Box className="mt-24 mb-12 flex items-center">
-          <Image
-            quality="85"
-            src={titusLogo}
-            alt='Titus logo'
-            height={40}
-            width={88}
-            layout="fixed"
-          />
+        <Box className={classes.box} mb={0}>
+          <Box display="flex" alignItems="center" mt={8} mb={3}>
+            <Image
+              quality="85"
+              src={titusLogo}
+              alt='Titus logo'
+              height={40}
+              width={88}
+              layout="fixed"
+            />
+          </Box>
+
+          <Typography className={classes.companyName} variant="h6">Công ty tnhh titus</Typography>
+          <Typography className={classes.address} variant="h6">241 Đại lộ Nguyễn Văn Linh,
+            phường Tân Hưng Quận 7,
+            TP. Hồ Chí Minh
+            +84 574 875 84
+          </Typography>
         </Box>
 
-        <Typography className={classes.companyName} variant="h6">Công ty tnhh titus</Typography>
-        <Typography className={classes.address} variant="h6">241 Đại lộ Nguyễn Văn Linh,
-          phường Tân Hưng Quận 7,
-          TP. Hồ Chí Minh
-          +84 574 875 84
-        </Typography>
+
+        <Divider className={classes.line} light />
+        <Box className={classes.box}>
+          <Typography className={classes.coppyRight} variant="h6">© 2021 titus.vn – © All reproduction rights reserved
+          </Typography>
+        </Box>
       </Box>
     </footer >
   )

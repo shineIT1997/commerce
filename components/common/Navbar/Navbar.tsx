@@ -28,14 +28,16 @@ const Navbar: FC<NavbarProps> = ({ links }) => {
 
     <Box className={classes.nav + " px-8 lg:px-16 xl:px32"}>
       <Link href="/">
-        <Image
-          quality="85"
-          src={logoImage}
-          alt='Titus logo'
-          height={40}
-          width={88}
-          layout="fixed"
-        />
+        <a href="/">
+          <Image
+            quality="85"
+            src={logoImage}
+            alt='Titus logo'
+            height={40}
+            width={88}
+            layout="fixed"
+          />
+        </a>
       </Link>
 
       <Hidden lgUp>
