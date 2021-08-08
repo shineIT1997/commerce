@@ -12,8 +12,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Image, { ImageProps } from 'next/image'
 
 
-import sliceStyle from './sliceStyle'
-import useStyles from './style'
+import sliceStyle from '../assets/sliceStyle'
+import useStyles from '../assets/style'
 
 const settings = {
   className: "slider variable-width",
