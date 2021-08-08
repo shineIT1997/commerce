@@ -83,7 +83,7 @@ export default function Home({
   const classes = useStyles()
 
   const settingsDesktop = {
-    className: `${slickClass.center} slider variable-width`,
+    className: `${slickClass.center} slider`,
     infinite: true,
     slidesToScroll: 5,
     variableWidth: true,
@@ -95,7 +95,7 @@ export default function Home({
   };
 
   const settingsMobile = {
-    className: `${slickClass.center} slider variable-width`,
+    className: `${slickClass.center} slider`,
     infinite: true,
     slidesToScroll: 2,
     variableWidth: true,
