@@ -26,7 +26,7 @@ const Navbar: FC<NavbarProps> = ({ links }) => {
 
   return <NavbarRoot>
 
-    <Box className={classes.nav + " px-8 lg:px-16 xl:px32"}>
+    <Box className={classes.nav + " px-4 lg:px-16 xl:px32"}>
       <Link href="/">
         <a href="/">
           <Image

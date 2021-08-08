@@ -21,6 +21,7 @@ const slickStyle = makeStyles(theme => ({
     maxWidth: "1440px",
     width: '100%',
     margin: 'auto',
+    marginTop: theme.spacing(5),
     padding: '0px 48px',
 
     [theme.breakpoints.down("md")]: {

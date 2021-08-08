@@ -11,7 +11,8 @@ import { theme } from 'tailwind.config';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 345,
+    width: "100%",
+    boxShadow: 'none',
   },
   media: {
     height: 140,
