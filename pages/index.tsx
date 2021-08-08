@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react'
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import commerce from '@lib/api/commerce'
 import Slider from "react-slick";
 import { Layout } from '@components/common'
@@ -83,7 +85,7 @@ export default function Home({
   const classes = useStyles()
 
   const settingsDesktop = {
-    className: `${slickClass.center} slider`,
+    className: `${slickClass.center} slider variable-width`,
     infinite: true,
     slidesToScroll: 5,
     variableWidth: true,
@@ -95,7 +97,7 @@ export default function Home({
   };
 
   const settingsMobile = {
-    className: `${slickClass.center} slider`,
+    className: `${slickClass.center} slider variable-width`,
     infinite: true,
     slidesToScroll: 2,
     variableWidth: true,

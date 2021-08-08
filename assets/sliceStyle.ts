@@ -66,17 +66,17 @@ const slickStyle = makeStyles(theme => ({
     },
 
     '& .slick-list': {
-      // overflow: 'initial',
+      overflow: 'auto',
       padding: theme.spacing(0)
+    },
+
+    '& .slick-track': {
+      display: "flex"
     },
 
     '& .slick-prev:before, .slick-next:before': {
       // overflow: 'initial',
       color: "#313131"
-    },
-
-    '& .slick-cloned': {
-      // display: 'none'
     },
   },
 
