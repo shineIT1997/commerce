@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import commerce from '@lib/api/commerce'
 import Slider from "react-slick";
-import { Layout } from '@components/common'
+import { Collaboration, Layout } from '@components/common'
 import { ProductCard } from '@components/product'
 import { Marquee, Hero } from '@components/ui'
 import Vendor from '@components/ui/Vendor'
@@ -141,7 +141,6 @@ export default function Home({
         <Slider {...settingsDesktop}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12, 13, 14, 15].map(el => {
             return <Vendor bg={getColor()} key={el} title="Test" imageSrc={logoImage} />
-
           })}
         </Slider>
       </Box>
@@ -331,8 +330,21 @@ export default function Home({
             </Grid>
           </Box>
         </Grid>
-
       </Box>
+
+      <Box className={classes.collab}>
+        <Box className={classes.collabContainer}>
+          <Typography className={classes.collabtilte}>
+            Đối tác của chúng tôi
+          </Typography>
+
+          <Box className={classes.collabBox}>
+            <Collaboration />
+          </Box>
+
+        </Box>
+      </Box>
+
 
 
       {

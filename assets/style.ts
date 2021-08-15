@@ -35,7 +35,7 @@ const useStyle = makeStyles(theme => ({
     },
 
     [theme.breakpoints.down("sm")]: {
-      padding: '24px 8px 56px',
+      padding: '24px 12px 56px',
     },
   },
 
@@ -55,7 +55,19 @@ const useStyle = makeStyles(theme => ({
     "&:nth-child(even)": {
       marginTop: theme.spacing(5),
       marginBottom: theme.spacing(-5),
-    }
+
+      [theme.breakpoints.down("sm")]: {
+        padding: `4px 8px 4px 4px !important`
+      },
+    },
+
+    "&:nth-child(odd)": {
+      [theme.breakpoints.down("sm")]: {
+        padding: `4px 4px 4px 8px !important`
+      },
+    },
+
+
   },
 
   category: {
@@ -142,6 +154,40 @@ const useStyle = makeStyles(theme => ({
     [theme.breakpoints.down("sm")]: {
       maxWidth: 124,
     },
+  },
+
+  collab: {
+    background: '#ECE6DF',
+  },
+
+  collabContainer: {
+    maxWidth: 1440,
+    margin: "auto",
+    boxSizing: "border-box",
+    padding: theme.spacing(7, 8, 9),
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(7, 2, 5),
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(7, 1, 5),
+    },
+  },
+
+  collabtilte: {
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '25px',
+    lineHeight: '40px',
+  },
+
+  collabBox: {
+    marginTop: theme.spacing(5),
+
+    [theme.breakpoints.down("md")]: {
+      marginTop: theme.spacing(4),
+    },
+
   }
 
 }))
