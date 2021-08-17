@@ -1,7 +1,7 @@
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import commerce from '@lib/api/commerce'
+import commerce, { getAllPostsForHome } from '@lib/api/commerce'
 import Slider from "react-slick";
 import { Collaboration, Layout } from '@components/common'
 import { ProductCard } from '@components/product'
@@ -17,17 +17,10 @@ import Image, { ImageProps } from 'next/image'
 import sliceStyle from '../assets/sliceStyle'
 import useStyles from '../assets/style'
 
-const settings = {
-  className: "slider variable-width",
-  dots: true,
-  infinite: true,
-  centerMode: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  variableWidth: true
-};
-
-
+interface brand {
+  _id: string,
+  imagePath: string
+}
 
 // import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
@@ -58,13 +51,17 @@ export async function getStaticProps({
   const siteInfoPromise = commerce.getSiteInfo({ config, preview })
   const { products } = await productsPromise
   const { pages } = await pagesPromise
-  const { categories, brands } = await siteInfoPromise
+
+  const homeData = await getAllPostsForHome()
+
+  const { suppliers, categories, manners } = homeData.data
 
   return {
     props: {
       products,
       categories,
-      brands,
+      manners,
+      brands: suppliers,
       pages,
     },
     revalidate: 60,
@@ -78,15 +75,17 @@ const cateItem = '/assets/cate_image.png'
 const smallCateImage = '/assets/7 1.png'
 
 export default function Home({
-  products,
+  products, brands,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 
   const slickClass = sliceStyle()
   const classes = useStyles()
 
+  const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL
+
   const settingsDesktop = {
     className: `${slickClass.center} slider variable-width`,
-    infinite: true,
+    infinite: false,
     slidesToScroll: 5,
     variableWidth: true,
     initialSlide: 0,
@@ -110,8 +109,8 @@ export default function Home({
   };
 
   function getColor() {
-    return "hsl(" + 360 * Math.random() + ',' +
-      (25 + 70 * Math.random()) + '%,' +
+    return "hsl(" + 180 * Math.random() + ',' +
+      (25 + 50 * Math.random()) + '%,' +
       (85 + 10 * Math.random()) + '%)'
   }
 
@@ -120,8 +119,11 @@ export default function Home({
       <Box className={slickClass.rootSliderMobile}>
 
         <Slider {...settingsMobile}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12, 13, 14, 15].map(el => {
-            return <Vendor bg={`#${Math.floor(Math.random() * 16777215).toString(16)}`} key={el} title="Test" imageSrc={logoImage} />
+          {brands.map((brand: brand) => {
+            return <Vendor
+              bg={getColor()} key={brand._id}
+              title="Test"
+              imageSrc={NEXT_PUBLIC_API_URL + brand?.imagePath} />
           })}
         </Slider>
       </Box>
@@ -139,8 +141,11 @@ export default function Home({
 
       <Box className={slickClass.rootSliderDesktop}>
         <Slider {...settingsDesktop}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12, 13, 14, 15].map(el => {
-            return <Vendor bg={getColor()} key={el} title="Test" imageSrc={logoImage} />
+          {brands.map((brand: brand) => {
+            return <Vendor
+              bg={getColor()} key={brand._id}
+              title="Test"
+              imageSrc={NEXT_PUBLIC_API_URL + brand?.imagePath} />
           })}
         </Slider>
       </Box>
@@ -346,31 +351,9 @@ export default function Home({
       </Box>
 
 
-
-      {
-        products.slice(0, 3).map((product: any, i: number) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            imgProps={{
-              width: i === 0 ? 1080 : 540,
-              height: i === 0 ? 1080 : 540,
-            }}
-          />
-        ))
-      }
-      <Marquee>
-        {products.slice(3).map((product: any, i: number) => (
-          <ProductCard key={product.id} product={product} variant="slim" />
-        ))}
-      </Marquee>
-      {/* <HomeAllProductsGrid
-        newestProducts={products}
-        categories={categories}
-        brands={brands}
-      /> */}
     </>
   )
 }
+
 
 Home.Layout = Layout
