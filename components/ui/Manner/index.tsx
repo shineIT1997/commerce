@@ -5,7 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import Image, { ImageProps } from 'next/image'
 import Typography from '@material-ui/core/Typography';
 import Link from 'next/link'
 
@@ -51,10 +51,13 @@ const Manner: FC<MannerProps> = ({ count, mannerId, alt, src, description }) => 
             {alt}
           </Typography>
 
-          <CardMedia
-            className={classes.media}
-            image={src}
-            title={alt}
+          <Image
+            quality="85"
+            src={src}
+            alt={alt}
+            layout="responsive"
+            width={310}
+            height={226}
           />
           <CardContent>
             <Typography variant="subtitle1" color="textSecondary" component="p">
