@@ -17,6 +17,9 @@ module.exports = withCommerceConfig({
     locales: ['en-US', 'es'],
     defaultLocale: 'en-US',
   },
+  images: {
+    domains: [process.env.NEXT_PUBLIC_API_URL],
+  },
   rewrites() {
     return [
       (isBC || isShopify || isSwell || isVendure) && {
