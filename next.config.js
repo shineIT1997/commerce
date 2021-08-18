@@ -18,7 +18,7 @@ module.exports = withCommerceConfig({
     defaultLocale: 'en-US',
   },
   images: {
-    domains: [process.env.NEXT_PUBLIC_API_URL],
+    domains: ["admin.titus.vn"],
   },
   rewrites() {
     return [

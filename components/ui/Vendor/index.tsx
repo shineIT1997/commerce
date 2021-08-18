@@ -25,8 +25,15 @@ const Vendor: FC<Props> = (props) => {
       <Link href={`/search?brand=${brandCode}`}>
         <a href={`/search?brand=${brandCode}`}>
           <Box style={{ backgroundColor: bg }} className={classes.imageBox}>
-            <img src={imageSrc}
-              alt='Titus logo' />
+            <Image
+              quality="85"
+              src={imageSrc}
+              alt='Wall'
+              width={120}
+              height={120}
+            />
+            {/* <img src={imageSrc}
+              alt='Titus logo' /> */}
           </Box>
         </a>
       </Link>
