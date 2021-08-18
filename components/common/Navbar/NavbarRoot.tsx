@@ -6,7 +6,7 @@ import s from './Navbar.module.css'
 const NavbarRoot: FC = ({ children }) => {
 
   return (
-    <div style={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.05)', }} className={cn(s.root)}>
+    <div className={cn(s.root)}>
       {children}
     </div>
   )
