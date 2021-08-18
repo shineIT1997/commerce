@@ -58,7 +58,9 @@ const slickStyle = makeStyles(theme => ({
 
     '& .slick-arrow': {
       fontSize: 32,
-      color: "#313131"
+      color: "#313131",
+
+
     },
 
     '& .slick-disabled': {
@@ -80,7 +82,31 @@ const slickStyle = makeStyles(theme => ({
     },
   },
 
+  project: {
+    [theme.breakpoints.down("md")]: {
+      display: "initial",
+      padding: '0px 32px',
+    },
 
+    '& .slick-slide': {
+      margin: theme.spacing(0, 1),
+      [theme.breakpoints.down("md")]: {
+        margin: theme.spacing(0, 0.5)
+      },
+    },
+    '& .slick-list': {
+      [theme.breakpoints.down("md")]: {
+        padding: theme.spacing(0, 1)
+      },
+    },
+
+    '& .slick-arrow': {
+      [theme.breakpoints.down("md")]: {
+        display: 'none !important'
+      },
+    },
+
+  }
 
 }))
 

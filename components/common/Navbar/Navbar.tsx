@@ -2,8 +2,7 @@ import { FC } from 'react'
 import Link from 'next/link'
 import NavbarRoot from './NavbarRoot'
 import Image, { ImageProps } from 'next/image'
-import { Logo, Container } from '@components/ui'
-import { Searchbar, UserNav } from '@components/common'
+import { useRouter } from 'next/router'
 import HomeIcon from '@material-ui/icons/Home';
 import Box from '@material-ui/core/Box';
 import Hidden from '@material-ui/core/Hidden';
@@ -23,10 +22,13 @@ const logoImage = '/assets/mobile/logo.png'
 
 const Navbar: FC<NavbarProps> = ({ links }) => {
   const classes = useStyles()
+  const router = useRouter()
+
+  const isHome = router.pathname === "/"
+  const isSearch = router.pathname === "/search"
 
   return <NavbarRoot>
-
-    <Box className={classes.nav + " px-4 lg:px-16 xl:px32"}>
+    <Box className={classes.nav}>
       <Link href="/">
         <a href="/">
           <Image
@@ -40,27 +42,29 @@ const Navbar: FC<NavbarProps> = ({ links }) => {
         </a>
       </Link>
 
-      <Hidden lgUp>
+      <Hidden smUp>
         <Box className="flex items-center lg:px-6">
-          <HomeIcon className={classes.homeIcon} />
+          <Link href="/">
+            <HomeIcon style={isHome ? { color: "#F8B864" } : {}} className={classes.homeIcon} />
+          </Link>
 
-          <Link href="/profile">
-            <Button className={classes.button + "  ml-4"}>
+          <Link href="/search">
+            <Button style={isSearch ? { background: "#F8B864" } : {}} className={classes.button + "  ml-4"}>
               Sản phẩm
             </Button>
           </Link>
         </Box>
       </Hidden>
 
-      <Hidden mdDown>
+      <Hidden xsDown>
         <Box className="flex items-center lg:px-6">
-          <Link href="/profile">
-            <Button className={classes.button}>
+          <Link href="/">
+            <Button style={isHome ? { background: "#F8B864" } : {}} className={classes.button}>
               Trang chủ
             </Button>
           </Link>
-          <Link href="/profile">
-            <Button className={classes.button + "  ml-4"}>
+          <Link href="/search">
+            <Button style={isSearch ? { background: "#F8B864" } : {}} className={classes.button + "  ml-4"}>
               Sản phẩm
             </Button>
           </Link>

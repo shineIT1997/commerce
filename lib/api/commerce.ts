@@ -6,4 +6,9 @@ export async function getAllPostsForHome(preview?: object) {
   return entries.data
 }
 
+export async function getAllBrand(preview?: object) {
+  const entries = await axios.get(`${process.env.API}brand/list`)
+  return entries.data
+}
+
 export default getCommerceApi()

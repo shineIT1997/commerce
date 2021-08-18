@@ -6,6 +6,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return getSearchStaticProps(context)
 }
 
+
 export function getStaticPaths(): GetStaticPathsResult {
   return {
     paths: [],

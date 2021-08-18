@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { theme } from 'tailwind.config';
+import Link from 'next/link'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,34 +28,43 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+interface MannerProps {
+  alt: string,
+  src: string,
+  mannerId: string,
+  count: number,
+  description: string
+}
+
 const bannerImage = '/assets/Banner.jpg'
 
-const Manner: FC = ({ }) => {
+const Manner: FC<MannerProps> = ({ count, mannerId, alt, src, description }) => {
 
   const classes = useStyles()
 
-  return <Card className={classes.root}>
-    <CardActionArea>
-      <Typography className={classes.title} gutterBottom variant="h5" component="h2">
-        Lizard
-      </Typography>
 
-      <CardMedia
-        className={classes.media}
-        image={bannerImage}
-        title="Contemplative Reptile"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-          across all continents except Antarctica
-        </Typography>
-      </CardContent>
-    </CardActionArea>
-  </Card>
+  return <Card className={classes.root}>
+    <Link href={`/search?manner=${mannerId}`}>
+      <a href={`/search?manner=${mannerId}`}>
+        <CardActionArea>
+          <Typography className={classes.title} gutterBottom variant="h5" component="h2">
+            {alt}
+          </Typography>
+
+          <CardMedia
+            className={classes.media}
+            image={src}
+            title={alt}
+          />
+          <CardContent>
+            <Typography variant="subtitle1" color="textSecondary" component="p">
+              {count} sản phẩm
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </a>
+    </Link >
+  </Card >
 }
 
 export default Manner

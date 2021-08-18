@@ -9,6 +9,15 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     alignItems: "center",
     display: "flex",
+    padding: theme.spacing(0, 8),
+
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(0, 1.5),
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      padding: '24px 12px',
+    },
   },
 
   button: {

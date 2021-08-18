@@ -1,6 +1,6 @@
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 
-import commerce from '@lib/api/commerce'
+import commerce, { getAllBrand } from '@lib/api/commerce'
 
 export async function getSearchStaticProps({
   preview,
@@ -11,12 +11,12 @@ export async function getSearchStaticProps({
   const pagesPromise = commerce.getAllPages({ config, preview })
   const siteInfoPromise = commerce.getSiteInfo({ config, preview })
   const { pages } = await pagesPromise
-  const { categories, brands } = await siteInfoPromise
+  const brands = await getAllBrand()
+
   return {
     props: {
       pages,
-      categories,
-      brands,
+      brands: brands.data,
     },
     revalidate: 200,
   }

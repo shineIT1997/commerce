@@ -11,26 +11,25 @@ interface Props {
   title: string,
   bg: string,
   imageSrc: string,
-  children?: any
+  brandCode: string,
+  children?: any,
 }
 
 const Vendor: FC<Props> = (props) => {
-  const { title, imageSrc, bg } = props
+  const { title, imageSrc, bg, brandCode } = props
 
   const classes = useStyle()
 
   return (
     <Box className={classes.root}>
-      <Box style={{ backgroundColor: bg }} className={classes.imageBox}>
-        {/* <Box className={classes.blurBackGround}></Box> */}
-        <Link href="/">
-          <a href="/">
+      <Link href={`/search?brand=${brandCode}`}>
+        <a href={`/search?brand=${brandCode}`}>
+          <Box style={{ backgroundColor: bg }} className={classes.imageBox}>
             <img src={imageSrc}
               alt='Titus logo' />
-          </a>
-        </Link>
-      </Box>
-
+          </Box>
+        </a>
+      </Link>
       <Typography className={classes.title}>{title}</Typography>
     </Box>
   )
