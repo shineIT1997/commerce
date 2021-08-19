@@ -10,6 +10,24 @@ import { ProductSlider, ProductCard } from '@components/product'
 import { Container, Text } from '@components/ui'
 import ProductSidebar from '../ProductSidebar'
 import ProductTag from '../ProductTag'
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    maxWidth: 1440,
+    margin: "auto",
+    padding: theme.spacing(4, 8),
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(3, 2),
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(2, 1),
+    },
+  },
+
+}));
+
 interface ProductViewProps {
   product: Product
   relatedProducts: Product[]
@@ -22,8 +40,10 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
     currencyCode: product.price.currencyCode!,
   })
 
+  const classes = useStyles()
+
   return (
-    <>
+    <div className={classes.root}>
       <Container className="max-w-none w-full" clean>
         <div className={cn(s.root, 'fit')}>
           <div className={cn(s.main, 'fit')}>
@@ -102,7 +122,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
           ],
         }}
       />
-    </>
+    </div>
   )
 }
 

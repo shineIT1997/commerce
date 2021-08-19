@@ -17,7 +17,7 @@ const ProductOptions: React.FC<ProductOptionsProps> = React.memo(
             <h2 className="uppercase font-medium text-sm tracking-wide">
               {opt.displayName}
             </h2>
-            <div className="flex flex-row py-4">
+            {/* <div className="flex flex-row py-4">
               {opt.values.map((v, i: number) => {
                 const active = selectedOptions[opt.displayName.toLowerCase()]
                 return (
@@ -39,7 +39,7 @@ const ProductOptions: React.FC<ProductOptionsProps> = React.memo(
                   />
                 )
               })}
-            </div>
+            </div> */}
           </div>
         ))}
       </div>

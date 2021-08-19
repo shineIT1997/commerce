@@ -42,11 +42,11 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
 
   return (
     <div className={className}>
-      <ProductOptions
+      {/* <ProductOptions
         options={product.options}
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
-      />
+      /> */}
       <Text
         className="pb-4 break-words w-full max-w-xl"
         html={product.descriptionHtml || product.description}

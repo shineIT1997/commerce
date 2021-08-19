@@ -8,6 +8,11 @@ import commerce from '@lib/api/commerce'
 import { Layout } from '@components/common'
 import { ProductView } from '@components/product'
 
+import { provider } from '../../framework/local/api/index'
+
+
+
+
 export async function getStaticProps({
   params,
   locale,
@@ -15,8 +20,10 @@ export async function getStaticProps({
   preview,
 }: GetStaticPropsContext<{ slug: string }>) {
   const config = { locale, locales }
+
   const pagesPromise = commerce.getAllPages({ config, preview })
   const siteInfoPromise = commerce.getSiteInfo({ config, preview })
+
   const productPromise = commerce.getProduct({
     variables: { slug: params!.slug },
     config,
@@ -54,12 +61,12 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   return {
     paths: locales
       ? locales.reduce<string[]>((arr, locale) => {
-          // Add a product path for every locale
-          products.forEach((product: any) => {
-            arr.push(`/${locale}/product${product.path}`)
-          })
-          return arr
-        }, [])
+        // Add a product path for every locale
+        products.forEach((product: any) => {
+          arr.push(`/${locale}/product${product.path}`)
+        })
+        return arr
+      }, [])
       : products.map((product: any) => `/product${product.path}`),
     fallback: 'blocking',
   }

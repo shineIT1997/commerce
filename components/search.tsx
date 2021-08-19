@@ -124,137 +124,194 @@ export default function Search({ brands }: SearchPropsType) {
     setActiveFilter(filter)
   }
 
+
+
   return <Box className={classes.root}>
     <Box className={slickClass.rootSliderMobile}>
       <CarouselVendor brands={brands} />
     </Box>
     <Grid container spacing={2}>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
       <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
+        <Link href={`/product/lightweight-jacket`}>
+          <a href={`/product/lightweight-jacket`}>
+            <Box className={classes.box}>
+              <img src="/assets/cate_image.png" alt="" />
+            </Box>
+          </a>
+        </Link>
         <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
       </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Box className={classes.box}>
-          <img src="/assets/cate_image.png" alt="" />
-        </Box>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
+
     </Grid>
   </Box>
 }
