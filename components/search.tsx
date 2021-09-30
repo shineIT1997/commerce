@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CarouselVendor from './ui/CarouselVendor'
 import axios from 'axios'
 import type { Product } from '@commerce/types/product'
+import { GetStaticPropsContext } from 'next'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -66,6 +67,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
+export async function getStaticProps(context: GetStaticPropsContext) {
+
+  console.log(context);
+  
+
+}
+
+
 export default function Search({ brands }: SearchPropsType) {
   const [products, setProducts] = useState([])
 
@@ -81,6 +90,8 @@ export default function Search({ brands }: SearchPropsType) {
 
   const handleGetProducts = async () => {
     try {
+      console.log("api", `${process.env.NEXT_PUBLIC_API_URL}/api${asPath}`);
+      
       const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api${asPath}`)
       
       setProducts(data?.docs || [])
