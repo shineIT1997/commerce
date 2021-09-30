@@ -9,6 +9,7 @@ const Head: FC = () => {
       <DefaultSeo {...config} />
       <NextHead>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        < meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta>
         <link rel="manifest" href="/site.webmanifest" key="site-manifest" />
       </NextHead>
     </>
