@@ -33,7 +33,10 @@ export type ProductVariant = {
 
 export type Product = {
   id: string
+  _id: string
   name: string
+  title: string
+  imagePath: string[],
   description: string
   descriptionHtml?: string
   sku?: string

@@ -8,7 +8,7 @@ import Vendor from '@components/ui/Vendor'
 import Manner from '@components/ui/Manner'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import {useState, MouseEvent} from 'react'
+import {useState, ChangeEvent} from 'react'
 import Hidden from '@material-ui/core/Hidden';
 import Link from 'next/link'
 
@@ -44,6 +44,7 @@ interface brand {
   imagePath: string,
   name: string,
   supId: string,
+  cateId: Array<any>
 }
 
 
@@ -100,8 +101,13 @@ export default function Home({
   }
 
 
-  const handleOnChangeSelect = (event: MouseEvent) => {
-    setSelectedBrand(event.target?.value || "")
+  const handleOnChangeSelect = (event: ChangeEvent<{
+    name?: string | undefined;
+    value: unknown;
+}>) => {
+    if (!event.target.value) return
+    
+    setSelectedBrand(event.target.value || "")
   }
 
 

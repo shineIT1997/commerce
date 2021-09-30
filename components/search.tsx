@@ -8,6 +8,7 @@ import { Box, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import CarouselVendor from './ui/CarouselVendor'
 import axios from 'axios'
+import type { Product } from '@commerce/types/product'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -97,7 +98,7 @@ export default function Search({ brands }: SearchPropsType) {
       <CarouselVendor brands={brands} />
     </Box>
     <Grid container spacing={2}>
-      {products.map(product => <Grid key={product._id} item lg={3} md={4} xs={6}>
+      {products.map((product: Product) => <Grid key={product._id} item lg={3} md={4} xs={6}>
         <Link href={`/product/${product?.slug}`}>
           <a href={`/product/${product?.slug}`}>
             <Box className={classes.box}>
