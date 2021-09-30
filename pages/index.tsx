@@ -52,6 +52,9 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const homeData = await getAllPostsForHome()
 
+  console.log(homeData);
+  
+
   const { suppliers, categories, manners } = homeData.data
 
   return {
@@ -116,6 +119,9 @@ export default function Home({
       (10 + 20 * Math.random()) + '%,' +
       (78 + 10 * Math.random()) + '%)'
   }
+
+  console.log(activeBrand, NEXT_PUBLIC_API_URL);
+  
 
   return (
     <>

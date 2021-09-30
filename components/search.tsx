@@ -82,7 +82,6 @@ export default function Search({ brands }: SearchPropsType) {
   const handleGetProducts = async () => {
     try {
       const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api${asPath}`)
-      console.log(data?.docs);
       
       setProducts(data?.docs || [])
       
