@@ -16,6 +16,7 @@ interface Props {
 }
 
 const placeholderImg = '/product-img-placeholder.svg'
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const ProductCard: FC<Props> = ({
   product,
@@ -43,7 +44,7 @@ const ProductCard: FC<Props> = ({
         {variant === 'slim' && (
           <>
             <div className={s.header}>
-              <span>{product.name}</span>
+              <span>{product.title}</span>
             </div>
             {product?.images && (
               <Image
@@ -79,11 +80,11 @@ const ProductCard: FC<Props> = ({
               </div>
             )}
             <div className={s.imageContainer}>
-              {product?.images && (
+              {product?.imagePath && (
                 <Image
-                  alt={product.name || 'Product Image'}
+                  alt={product.title || 'Product Image'}
                   className={s.productImage}
-                  src={product.images[0].url || placeholderImg}
+                  src={NEXT_PUBLIC_API_URL+ product?.imagePath[0] || placeholderImg}
                   height={540}
                   width={540}
                   quality="85"

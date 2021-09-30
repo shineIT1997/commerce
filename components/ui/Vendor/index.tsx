@@ -22,8 +22,8 @@ const Vendor: FC<Props> = (props) => {
 
   return (
     <Box className={classes.root}>
-      <Link href={`/search?brand=${brandCode}`}>
-        <a href={`/search?brand=${brandCode}`}>
+      <Link href={`/search?supplierID=${brandCode}`}>
+        <a href={`/search?supplierID=${brandCode}`}>
           <Box style={{ backgroundColor: bg }} className={classes.imageBox}>
             <Image
               quality="85"

@@ -34,11 +34,9 @@ interface ProductViewProps {
 }
 
 const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
-  const { price } = usePrice({
-    amount: product.price.value,
-    baseAmount: product.price.retailPrice,
-    currencyCode: product.price.currencyCode!,
-  })
+
+  
+  const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL
 
   const classes = useStyles()
 
@@ -47,26 +45,21 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
       <Container className="max-w-none w-full" clean>
         <div className={cn(s.root, 'fit')}>
           <div className={cn(s.main, 'fit')}>
-            <ProductTag
-              name={product.name}
-              price={`${price} ${product.price?.currencyCode}`}
-              fontSize={32}
-            />
             <div className={s.sliderContainer}>
               <ProductSlider key={product.id}>
-                {product.images.map((image, i) => (
-                  <div key={image.url} className={s.imageContainer}>
-                    <Image
-                      className={s.img}
-                      src={image.url!}
-                      alt={image.alt || 'Product Image'}
-                      width={600}
-                      height={600}
-                      priority={i === 0}
-                      quality="85"
-                    />
-                  </div>
-                ))}
+                {product?.imagePath.map((image, i) => {
+                  return  <div key={image} className={s.imageContainer}>
+                  <Image
+                    className={s.img}
+                    src={NEXT_PUBLIC_API_URL + image}
+                    alt={product.title || 'Product Image'}
+                    width={500}
+                    height={500}
+                    priority={i === 0}
+                    quality="85"
+                  />
+                </div>
+                })}
               </ProductSlider>
             </div>
             {process.env.COMMERCE_WISHLIST_ENABLED && (
@@ -86,13 +79,13 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
           <div className={s.relatedProductsGrid}>
             {relatedProducts.map((p) => (
               <div
-                key={p.path}
+                key={p._id}
                 className="animated fadeIn bg-accent-0 border border-accent-2"
               >
                 <ProductCard
                   noNameTag
                   product={p}
-                  key={p.path}
+                  key={p.slug}
                   variant="simple"
                   className="animated fadeIn"
                   imgProps={{
@@ -114,7 +107,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
           description: product.description,
           images: [
             {
-              url: product.images[0]?.url!,
+              url:NEXT_PUBLIC_API_URL+ product.imagePath[0]!,
               width: 800,
               height: 600,
               alt: product.name,

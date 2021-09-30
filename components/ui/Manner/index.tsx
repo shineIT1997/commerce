@@ -42,10 +42,9 @@ const Manner: FC<MannerProps> = ({ count, mannerId, alt, src, description }) => 
 
   const classes = useStyles()
 
-
   return <Card className={classes.root}>
-    <Link href={`/search?manner=${mannerId}`}>
-      <a href={`/search?manner=${mannerId}`}>
+    <Link href={`/search?mannerId=${mannerId}`}>
+      <a href={`/search?mannerId=${mannerId}`}>
         <CardActionArea>
           <Typography className={classes.title} gutterBottom variant="h5" component="h2">
             {alt}

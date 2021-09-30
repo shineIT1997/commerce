@@ -6,7 +6,11 @@ export async function getSearchStaticProps({
   preview,
   locale,
   locales,
+  params
 }: GetStaticPropsContext) {
+
+  console.log(params);
+  
   const config = { locale, locales }
   const pagesPromise = commerce.getAllPages({ config, preview })
   const siteInfoPromise = commerce.getSiteInfo({ config, preview })

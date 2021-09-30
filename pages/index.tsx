@@ -8,7 +8,7 @@ import Vendor from '@components/ui/Vendor'
 import Manner from '@components/ui/Manner'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import Paper from '@material-ui/core/Paper';
+import {useState, MouseEvent} from 'react'
 import Hidden from '@material-ui/core/Hidden';
 import Link from 'next/link'
 
@@ -26,11 +26,9 @@ import {
   Grid,
   Typography,
   FormControl,
-  InputLabel,
   Select,
 } from '@material-ui/core';
 import CarouselVendor from "@components/ui/CarouselVendor";
-import slickStyle from "../assets/sliceStyle";
 
 interface manner {
   _id: string,
@@ -50,34 +48,16 @@ interface brand {
 
 
 export async function getStaticProps({
-  preview,
-  locale,
-  locales,
 }: GetStaticPropsContext) {
-  const config = { locale, locales }
-  const productsPromise = commerce.getAllProducts({
-    variables: { first: 6 },
-    config,
-    preview,
-    // Saleor provider only
-    ...({ featured: true } as any),
-  })
-  const pagesPromise = commerce.getAllPages({ config, preview })
-  const siteInfoPromise = commerce.getSiteInfo({ config, preview })
-  const { products } = await productsPromise
-  const { pages } = await pagesPromise
-
   const homeData = await getAllPostsForHome()
 
   const { suppliers, categories, manners } = homeData.data
 
   return {
     props: {
-      products,
       categories,
       manners,
       brands: suppliers,
-      pages,
     },
     revalidate: 60,
   }
@@ -92,11 +72,13 @@ const hotVendor = "/assets/hot_vendor_desktop.png"
 const newVendor = "/assets/new_vendor_desktop.png"
 
 export default function Home({
-  brands, manners
+  brands, manners,...props
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-
+  const [selectedBrand, setSelectedBrand] = useState(brands[0]?.supId || "");
   const slickClass = sliceStyle()
   const classes = useStyles()
+  const activeBrand : brand = brands.find((brand:brand) => brand.supId === selectedBrand)
+
 
   const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -117,6 +99,10 @@ export default function Home({
     infinite: true,
   }
 
+
+  const handleOnChangeSelect = (event: MouseEvent) => {
+    setSelectedBrand(event.target?.value || "")
+  }
 
 
   function getColor() {
@@ -181,7 +167,7 @@ export default function Home({
 
           {brands.map((brand: brand) => {
             return <Vendor
-              brandCode={brand.supId}
+              brandCode={brand._id}
               bg={getColor()} key={brand._id}
               title={brand.name}
               imageSrc={NEXT_PUBLIC_API_URL + brand?.imagePath} />
@@ -223,10 +209,8 @@ export default function Home({
             </Typography>
 
             <FormControl variant="outlined" className={classes.formControl}>
-              <Select native>
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
+              <Select value={selectedBrand} onChange={handleOnChangeSelect}>
+                {brands?.length && brands.map((brand:brand) => <option key={brand.supId} value={brand.supId}>{ brand.name}</option>)}
               </Select>
             </FormControl>
           </Box>
@@ -242,11 +226,14 @@ export default function Home({
         <Grid item xs={12}>
           <Box>
             <Grid container justifyContent="space-between" spacing={3}>
-              <Grid item xs={12} md={4}>
-                <Box style={{ background: '#E9D2CE' }} className={classes.cateItem}>
+              {activeBrand && activeBrand.cateId.slice(0, 3).map((cate: any, idx: number) =>
+                <Grid key={cate?._id} item xs={12} md={4}>
+                <Link  href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}>
+                  <a href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}>
+                <Box style={{ background:getColor() }} className={classes.cateItem}>
                   <Box>
                     <Typography className={classes.cateName}>
-                      DELTA line
+                     {cate?.name}
                     </Typography>
                     <Typography variant="body2">
                       4000 sản phẩm
@@ -256,55 +243,22 @@ export default function Home({
                   <Box>
                     <img
                       className={classes.cateImage}
-                      src={cateItem}
+                      src={NEXT_PUBLIC_API_URL + cate?.imagePath}
                       alt='Phong Cách' />
                   </Box>
                 </Box>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Box style={{ background: '#DFE9EF' }} className={classes.cateItem}>
+                </a>
+            </Link>
+            </Grid> )}
+
+              {activeBrand && activeBrand.cateId.slice(3).map((cate: any, idx: number) =>
+                    <Grid key={cate?._id} item xs={12} md={6} lg={3}>
+                <Link href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}>
+                  <a href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}>
+                <Box style={{ background:getColor()  }} className={classes.smallCateItem}>
                   <Box>
                     <Typography className={classes.cateName}>
-                      DELTA line
-                    </Typography>
-                    <Typography variant="body2">
-                      4000 sản phẩm
-                    </Typography>
-                  </Box>
-
-                  <Box>
-                    <img
-                      className={classes.cateImage}
-                      src={cateItem}
-                      alt='Phong Cách' />
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Box style={{ background: '#FCF1D5' }} className={classes.cateItem}>
-                  <Box>
-                    <Typography className={classes.cateName}>
-                      DELTA line
-                    </Typography>
-                    <Typography variant="body2">
-                      4000 sản phẩm
-                    </Typography>
-                  </Box>
-
-                  <Box>
-                    <img
-                      className={classes.cateImage}
-                      src={cateItem}
-                      alt='Phong Cách' />
-                  </Box>
-                </Box>
-              </Grid>
-
-              <Grid item xs={12} md={6} lg={3}>
-                <Box style={{ background: '#EDEAE4' }} className={classes.smallCateItem}>
-                  <Box>
-                    <Typography className={classes.cateName}>
-                      DELTA line
+                    {cate?.name}
                     </Typography>
                     <Typography variant="body2">
                       4000 sản phẩm
@@ -314,68 +268,16 @@ export default function Home({
                   <Box>
                     <img
                       className={classes.cateSmallImage}
-                      src={cateItem}
+                      src={NEXT_PUBLIC_API_URL + cate?.imagePath}
                       alt='Phong Cách' />
                   </Box>
                 </Box>
-              </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <Box style={{ background: '#E9D2CE' }} className={classes.smallCateItem}>
-                  <Box>
-                    <Typography className={classes.cateName}>
-                      DELTA line
-                    </Typography>
-                    <Typography variant="body2">
-                      4000 sản phẩm
-                    </Typography>
-                  </Box>
+                </a>
+                </Link>
+                </Grid>
+              )}
 
-                  <Box>
-                    <img
-                      className={classes.cateSmallImage}
-                      src={cateItem}
-                      alt='Phong Cách' />
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <Box style={{ background: '#DCCDC6' }} className={classes.smallCateItem}>
-                  <Box>
-                    <Typography className={classes.cateName}>
-                      DELTA line
-                    </Typography>
-                    <Typography variant="body2">
-                      4000 sản phẩm
-                    </Typography>
-                  </Box>
 
-                  <Box>
-                    <img
-                      className={classes.cateSmallImage}
-                      src={cateItem}
-                      alt='Phong Cách' />
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <Box style={{ background: '#D1DCC4' }} className={classes.smallCateItem}>
-                  <Box>
-                    <Typography className={classes.cateName}>
-                      DELTA line
-                    </Typography>
-                    <Typography variant="body2">
-                      4000 sản phẩm
-                    </Typography>
-                  </Box>
-
-                  <Box>
-                    <img
-                      className={classes.cateSmallImage}
-                      src={smallCateImage}
-                      alt='Phong Cách' />
-                  </Box>
-                </Box>
-              </Grid>
             </Grid>
           </Box>
         </Grid>

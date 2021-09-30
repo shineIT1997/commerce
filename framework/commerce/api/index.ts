@@ -106,8 +106,6 @@ export function getCommerceApi<P extends APIProvider>(
     }
   })
 
-  console.log(`commerce : `, commerce);
-
   return commerce
 }
 

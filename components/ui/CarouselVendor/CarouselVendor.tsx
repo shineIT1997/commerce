@@ -106,8 +106,8 @@ const CarouselVendor: FC<CarouselVendorProps> = ({ brands }) => {
 
   return <Slider {...settingsMobile}>
     <Box className={classes.root}>
-      <Link href={`/search`}>
-        <a href={`/search`}>
+      <Link href={`/search?isHot`}>
+        <a href={`/search?isHot`}>
           <img src={hotVendor}
             alt='Titus logo' />
         </a>
@@ -126,6 +126,7 @@ const CarouselVendor: FC<CarouselVendorProps> = ({ brands }) => {
     </Box>
 
     {brands.map((brand: brand) => {
+
       return <Vendor
         bg={getColor()} key={brand._id}
         title={brand.name}

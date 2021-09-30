@@ -1,37 +1,13 @@
-import cn from 'classnames'
 import type { SearchPropsType } from '@lib/search-props'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { useRouter } from 'next/router'
-
 import { Layout } from '@components/common'
-import { ProductCard } from '@components/product'
-import type { Product } from '@commerce/types/product'
-import { Container, Skeleton } from '@components/ui'
-
-import useSearch from '@framework/product/use-search'
-
-import getSlug from '@lib/get-slug'
 import sliceStyle from '../assets/sliceStyle'
-
-const SORT = Object.entries({
-  'trending-desc': 'Trending',
-  'latest-desc': 'Latest arrivals',
-  'price-asc': 'Price: Low to high',
-  'price-desc': 'Price: High to low',
-})
-
-import {
-  filterQuery,
-  getCategoryPath,
-  getDesignerPath,
-  useSearchMeta,
-} from '@lib/search'
 import { Box, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-import type { GetStaticPropsContext } from 'next'
-import { getAllBrand } from '@lib/api/commerce'
 import CarouselVendor from './ui/CarouselVendor'
+import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -90,38 +66,28 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function Search({ brands }: SearchPropsType) {
-  const [activeFilter, setActiveFilter] = useState('')
-  const [toggleFilter, setToggleFilter] = useState(false)
+  const [products, setProducts] = useState([])
+
   const classes = useStyles()
   const slickClass = sliceStyle()
 
   const router = useRouter()
-  const { asPath, locale } = router
-  const { q, sort } = router.query
-  // `q` can be included but because categories and designers can't be searched
-  // in the same way of products, it's better to ignore the search input if one
-  // of those is selected
-  const query = filterQuery({ sort })
+  const { asPath } = router
 
-  const { pathname, category, brand } = useSearchMeta(asPath)
-  // const activeBrand = brands.find(
-  //   (b: any) => getSlug(b.node.path) === `brands/${brand}`
-  // )?.node
+  useEffect(() => {
+    handleGetProducts()
+  }, [asPath])
 
-  const { data } = useSearch({
-    search: typeof q === 'string' ? q : '',
-    // brandId: (activeBrand as any)?.entityId,
-    sort: typeof sort === 'string' ? sort : '',
-    locale,
-  })
-
-  const handleClick = (event: any, filter: string) => {
-    if (filter !== activeFilter) {
-      setToggleFilter(true)
-    } else {
-      setToggleFilter(!toggleFilter)
+  const handleGetProducts = async () => {
+    try {
+      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api${asPath}`)
+      console.log(data?.docs);
+      
+      setProducts(data?.docs || [])
+      
+    } catch (error) {
+      
     }
-    setActiveFilter(filter)
   }
 
 
@@ -131,186 +97,16 @@ export default function Search({ brands }: SearchPropsType) {
       <CarouselVendor brands={brands} />
     </Box>
     <Grid container spacing={2}>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
+      {products.map(product => <Grid key={product._id} item lg={3} md={4} xs={6}>
+        <Link href={`/product/${product?.slug}`}>
+          <a href={`/product/${product?.slug}`}>
             <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
+              <img src={process.env.NEXT_PUBLIC_API_URL + product?.imagePath[0]} alt={product.title} />
             </Box>
           </a>
         </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
-      <Grid item lg={3} md={4} xs={6}>
-        <Link href={`/product/lightweight-jacket`}>
-          <a href={`/product/lightweight-jacket`}>
-            <Box className={classes.box}>
-              <img src="/assets/cate_image.png" alt="" />
-            </Box>
-          </a>
-        </Link>
-        <Typography className={classes.title}>Lorem ipsum Lorem ipsumLorem </Typography>
-      </Grid>
+        <Typography className={classes.title}>{product.title} </Typography>
+      </Grid>)}
 
     </Grid>
   </Box>

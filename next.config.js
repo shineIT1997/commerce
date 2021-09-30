@@ -18,7 +18,7 @@ module.exports = withCommerceConfig({
     defaultLocale: 'en-US',
   },
   images: {
-    domains: ["admin.titus.vn"],
+    domains: ["admin.titus.vn","127.0.0.1"],
   },
   rewrites() {
     return [
