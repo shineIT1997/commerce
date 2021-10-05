@@ -47,14 +47,14 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
           <div className={cn(s.main, 'fit')}>
             <div className={s.sliderContainer}>
               <ProductSlider key={product.id}>
-                 {product?.imagePath.map((image, i) => {
+                {product?.imagePath.map((image, i) => {
                   return  <div key={image} className={s.imageContainer}>
                   <Image
                     className={s.img}
                     src={NEXT_PUBLIC_API_URL + image}
                     alt={product.title || 'Product Image'}
-                    width={500}
-                    height={500}
+                    width={350}
+                    height={350}
                     priority={i === 0}
                     quality="85"
                   />
@@ -62,13 +62,6 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                 })}
               </ProductSlider>
             </div>
-            {process.env.COMMERCE_WISHLIST_ENABLED && (
-              <WishlistButton
-                className={s.wishlistButton}
-                productId={product.id}
-                variant={product.variants[0]}
-              />
-            )}
           </div>
 
           <ProductSidebar product={product} className={s.sidebar} />

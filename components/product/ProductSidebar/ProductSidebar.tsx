@@ -22,27 +22,8 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
   
 
-  // useEffect(() => {
-  //   selectDefaultOptionFromProduct(product, setSelectedOptions)
-  // }, [])
-
-  // const variant = getProductVariant(product, selectedOptions)
-  // const addToCart = async () => {
-  //   setLoading(true)
-  //   try {
-  //     await addItem({
-  //       productId: String(product.id),
-  //       variantId: String(variant ? variant.id : product.variants[0].id),
-  //     })
-  //     openSidebar()
-  //     setLoading(false)
-  //   } catch (err) {
-  //     setLoading(false)
-  //   }
-  // }
-
   return (
-    <div id="fffffff" className={className}>
+    <div className={className}>
       <Text
         className="pb-4 break-words w-full max-w-xl"
         html={product.title}
@@ -57,7 +38,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
           This is a limited edition production run. Printing starts when the
           drop ends.
         </Collapse> */}
-        <Collapse title="Details">
+        <Collapse open title="Details">
           {product.description}
         </Collapse>
       </div>

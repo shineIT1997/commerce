@@ -87,7 +87,6 @@ const ProductCard: FC<Props> = ({
                   src={NEXT_PUBLIC_API_URL+ product?.imagePath[0] || placeholderImg}
                   height={540}
                   width={540}
-                  quality="85"
                   layout="responsive"
                   {...imgProps}
                 />

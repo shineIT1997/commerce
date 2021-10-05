@@ -138,12 +138,11 @@ export default function Home({
       <Hidden smUp>
         <Box className={classes.banner}>
           <Image
-            quality="85"
             src={bannerMobile}
             alt='Wall'
             layout="responsive"
-            width={375}
-            height={480}
+            width={90}
+            height={100}
           />
         </Box>
       </Hidden>
@@ -151,8 +150,8 @@ export default function Home({
       <Box className={slickClass.rootSliderDesktop}>
         <Slider {...settingsDesktop}>
           <Box>
-            <Link href={`/search`}>
-              <a href={`/search`}>
+            <Link href={`/search?isHot`}>
+              <a href={`/search?isHot`}>
                 <img src={hotVendor}
                   alt='Titus logo' />
               </a>
@@ -230,7 +229,7 @@ export default function Home({
 
         <Grid item xs={12}>
           <Box>
-            <Grid container justifyContent="space-between" spacing={3}>
+            <Grid container spacing={3}>
               {activeBrand && activeBrand.cateId.slice(0, 3).map((cate: any, idx: number) =>
                 <Grid key={cate?._id} item xs={12} md={4}>
                 <Link  href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}>
@@ -432,7 +431,7 @@ export default function Home({
               </Grid>
             </Grid>
 
-            <Grid container spacing={2}>
+            <Grid container spacing={3}>
               <Grid item md={6} lg={4}>
                 <Box className={classes.newItem}>
                   <img src="/assets/new_banner_desktop.png" alt="new banner" />

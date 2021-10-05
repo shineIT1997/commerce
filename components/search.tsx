@@ -1,4 +1,5 @@
 import type { SearchPropsType } from '@lib/search-props'
+import GridOffIcon from '@material-ui/icons/GridOff';
 import Link from 'next/link'
 import { useState,useEffect } from 'react'
 import { useRouter } from 'next/router'
@@ -90,9 +91,10 @@ export default function Search({ brands }: SearchPropsType) {
 
   const handleGetProducts = async () => {
     try {
-      console.log("api", `${process.env.NEXT_PUBLIC_API_URL}/api${asPath}`);
-      
-      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api${asPath}`)
+      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api${asPath}`, {
+        headers: {
+        "Access-Control-Allow-Origin": "*"
+      }})
       
       setProducts(data?.docs || [])
       
@@ -101,14 +103,13 @@ export default function Search({ brands }: SearchPropsType) {
     }
   }
 
-
-
   return <Box className={classes.root}>
     <Box className={slickClass.rootSliderMobile}>
       <CarouselVendor brands={brands} />
     </Box>
     <Grid container spacing={2}>
-      {products.map((product: Product) => <Grid key={product._id} item lg={3} md={4} xs={6}>
+      {products.length ?
+        products.map((product: Product) => <Grid key={product._id} item lg={3} md={4} xs={6}>
         <Link href={`/product/${product?.slug}`}>
           <a href={`/product/${product?.slug}`}>
             <Box className={classes.box}>
@@ -117,7 +118,15 @@ export default function Search({ brands }: SearchPropsType) {
           </a>
         </Link>
         <Typography className={classes.title}>{product.title} </Typography>
-      </Grid>)}
+        </Grid>) :
+        <div className="group flex flex-col mx-auto">
+          <div className="flex-1 px-12 py-24 flex flex-col justify-center items-center ">
+            <GridOffIcon fontSize="large" />
+            <p className="text-accent-6 px-10 text-center pt-2">
+              Không có sản phẩm trong danh sách
+            </p>
+          </div>
+        </div>}
 
     </Grid>
   </Box>

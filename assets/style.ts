@@ -364,6 +364,11 @@ const useStyle = makeStyles(theme => ({
     position: "relative",
     padding: theme.spacing(0, 0, 13),
     background: "#ffff",
+    "& img": {
+      width: "100%",
+      objectFit: "contain"
+    },
+
     [theme.breakpoints.down("sm")]: {
       marginBottom: theme.spacing(1),
       padding: theme.spacing(1.2),

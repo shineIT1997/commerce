@@ -8,10 +8,11 @@ import useMeasure from 'react-use-measure'
 export interface CollapseProps {
   title: string
   children: ReactNode
+  open?: boolean
 }
 
-const Collapse: FC<CollapseProps> = React.memo(({ title, children }) => {
-  const [isActive, setActive] = useState(false)
+const Collapse: FC<CollapseProps> = React.memo(({ title, children, open }) => {
+  const [isActive, setActive] = useState(open || false)
   const [ref, { height: viewHeight }] = useMeasure()
 
   const animProps = useSpring({
