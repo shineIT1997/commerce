@@ -6,11 +6,11 @@ import { useRouter } from 'next/router'
 import { Layout } from '@components/common'
 import sliceStyle from '../assets/sliceStyle'
 import { Box, Grid, Typography } from '@material-ui/core'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import CarouselVendor from './ui/CarouselVendor'
 import axios from 'axios'
 import type { Product } from '@commerce/types/product'
-import { GetStaticPropsContext } from 'next'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,16 +68,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export async function getStaticProps(context: GetStaticPropsContext) {
-
-  console.log(context);
-  
-
-}
-
-
 export default function Search({ brands }: SearchPropsType) {
   const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+
 
   const classes = useStyles()
   const slickClass = sliceStyle()
@@ -91,6 +85,7 @@ export default function Search({ brands }: SearchPropsType) {
 
   const handleGetProducts = async () => {
     try {
+      if(!loading) setLoading(true);
       const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api${asPath}`, {
         headers: {
         "Access-Control-Allow-Origin": "*"
@@ -98,8 +93,8 @@ export default function Search({ brands }: SearchPropsType) {
       
       setProducts(data?.docs || [])
       
-    } catch (error) {
-      
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -108,7 +103,9 @@ export default function Search({ brands }: SearchPropsType) {
       <CarouselVendor brands={brands} />
     </Box>
     <Grid container spacing={2}>
-      {products.length ?
+      {loading ? <div className="mx-auto">
+        <CircularProgress/>
+      </div>  :products.length ?
         products.map((product: Product) => <Grid key={product._id} item lg={3} md={4} xs={6}>
         <Link href={`/product/${product?.slug}`}>
           <a href={`/product/${product?.slug}`}>
