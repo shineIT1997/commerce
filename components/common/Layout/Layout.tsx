@@ -7,12 +7,8 @@ import { useUI } from '@components/ui/context'
 import type { Page } from '@commerce/types/page'
 import { Navbar, Footer } from '@components/common'
 import type { Category } from '@commerce/types/site'
-import ShippingView from '@components/checkout/ShippingView'
-import CartSidebarView from '@components/cart/CartSidebarView'
 import { useAcceptCookies } from '@lib/hooks/useAcceptCookies'
 import { Sidebar, Modal, LoadingDots } from '@components/ui'
-import PaymentMethodView from '@components/checkout/PaymentMethodView'
-import CheckoutSidebarView from '@components/checkout/CheckoutSidebarView'
 import LoginView from '@components/auth/LoginView'
 import s from './Layout.module.css'
 import Button from '@material-ui/core/Button'
@@ -70,15 +66,10 @@ const ModalUI: FC = () => {
 }
 
 const SidebarView: FC<{ sidebarView: string; closeSidebar(): any }> = ({
-  sidebarView,
   closeSidebar,
 }) => {
   return (
     <Sidebar onClose={closeSidebar}>
-      {sidebarView === 'CART_VIEW' && <CartSidebarView />}
-      {sidebarView === 'CHECKOUT_VIEW' && <CheckoutSidebarView />}
-      {sidebarView === 'PAYMENT_VIEW' && <PaymentMethodView />}
-      {sidebarView === 'SHIPPING_VIEW' && <ShippingView />}
     </Sidebar>
   )
 }
