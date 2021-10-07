@@ -9,7 +9,6 @@ import { Navbar, Footer } from '@components/common'
 import type { Category } from '@commerce/types/site'
 import { useAcceptCookies } from '@lib/hooks/useAcceptCookies'
 import { Sidebar, Modal, LoadingDots } from '@components/ui'
-import LoginView from '@components/auth/LoginView'
 import s from './Layout.module.css'
 import Button from '@material-ui/core/Button'
 
@@ -23,16 +22,6 @@ const dynamicProps = {
   loading: () => <Loading />,
 }
 
-const SignUpView = dynamic(
-  () => import('@components/auth/SignUpView'),
-  dynamicProps
-)
-
-const ForgotPassword = dynamic(
-  () => import('@components/auth/ForgotPassword'),
-  dynamicProps
-)
-
 const FeatureBar = dynamic(
   () => import('@components/common/FeatureBar'),
   dynamicProps
@@ -43,26 +32,6 @@ interface Props {
     pages?: Page[]
     categories: Category[]
   }
-}
-
-const ModalView: FC<{ modalView: string; closeModal(): any }> = ({
-  modalView,
-  closeModal,
-}) => {
-  return (
-    <Modal onClose={closeModal}>
-      {modalView === 'LOGIN_VIEW' && <LoginView />}
-      {modalView === 'SIGNUP_VIEW' && <SignUpView />}
-      {modalView === 'FORGOT_VIEW' && <ForgotPassword />}
-    </Modal>
-  )
-}
-
-const ModalUI: FC = () => {
-  const { displayModal, closeModal, modalView } = useUI()
-  return displayModal ? (
-    <ModalView modalView={modalView} closeModal={closeModal} />
-  ) : null
 }
 
 const SidebarView: FC<{ sidebarView: string; closeSidebar(): any }> = ({
@@ -99,7 +68,6 @@ const Layout: FC<Props> = ({
         <Navbar links={navBarlinks} />
         <main className="fit">{children}</main>
         <Footer pages={pageProps.pages} />
-        <ModalUI />
         <SidebarUI />
         <FeatureBar
           title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
