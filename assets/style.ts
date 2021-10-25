@@ -86,7 +86,7 @@ const useStyle = makeStyles(theme => ({
   },
 
   formControl: {
-    minWidth: 100,
+    minWidth: 140,
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: '13px',

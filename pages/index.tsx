@@ -1,19 +1,17 @@
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 import commerce, { getAllPostsForHome } from '@lib/api/commerce'
-import Slider from "react-slick";
+import Slider from 'react-slick'
 import { Collaboration, Layout } from '@components/common'
 import Vendor from '@components/ui/Vendor'
 import Manner from '@components/ui/Manner'
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import {useState, ChangeEvent} from 'react'
-import Hidden from '@material-ui/core/Hidden';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import { useState, ChangeEvent } from 'react'
+import Hidden from '@material-ui/core/Hidden'
 import Link from 'next/link'
 
 import Image, { ImageProps } from 'next/image'
-
 
 import sliceStyle from '../assets/sliceStyle'
 import useStyles from '../assets/style'
@@ -27,29 +25,28 @@ import {
   Typography,
   FormControl,
   Select,
-} from '@material-ui/core';
-import CarouselVendor from "@components/ui/CarouselVendor";
+} from '@material-ui/core'
+import CarouselVendor from '@components/ui/CarouselVendor'
 
 interface manner {
-  _id: string,
-  name: string,
-  count: number,
-  mannerId: string,
-  imagePath: string,
+  _id: string
+  name: string
+  countProduct: number
+  countSupplier: number
+  mannerId: string
+  imagePath: string
   description: string
 }
 
 interface brand {
-  _id: string,
-  imagePath: string,
-  name: string,
-  supId: string,
+  _id: string
+  imagePath: string
+  name: string
+  supId: string
   cateId: Array<any>
 }
 
-
-export async function getStaticProps({
-}: GetStaticPropsContext) {
+export async function getStaticProps({}: GetStaticPropsContext) {
   const homeData = await getAllPostsForHome()
   const { suppliers, categories, manners } = homeData.data
 
@@ -68,17 +65,35 @@ const bannerMobile = '/assets/banner_mobile.png'
 const mannerTitle = '/assets/manner_tilte.png'
 const cateItem = '/assets/cate_image.png'
 const smallCateImage = '/assets/7 1.png'
-const hotVendor = "/assets/hot_vendor_desktop.png"
-const newVendor = "/assets/new_vendor_desktop.png"
+const hotVendor = '/assets/hot_vendor_desktop.png'
+const newVendor = '/assets/new_vendor_desktop.png'
 
 export default function Home({
-  brands, manners,...props
+  brands,
+  manners,
+  ...props
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [selectedBrand, setSelectedBrand] = useState(brands[0]?.supId || "");
+  const [selectedBrand, setSelectedBrand] = useState(brands[0]?.supId || '')
+  const [more, setMore] = useState<boolean>(false)
   const slickClass = sliceStyle()
   const classes = useStyles()
-  const activeBrand : brand = brands.find((brand:brand) => brand.supId === selectedBrand)
-
+  const activeBrand: brand =
+    selectedBrand === 'All'
+      ? {
+          cateId: brands
+            .reduce(
+              (res: Array<any>, brand: brand) => [...res, ...brand.cateId],
+              []
+            )
+            .reduce(
+              (res: Array<object>, cate: any) =>
+                res.some((el: any) => cate?._id === el?._id)
+                  ? res
+                  : [...res, cate],
+              []
+            ),
+        }
+      : brands.find((brand: brand) => brand.supId === selectedBrand)
 
   const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -91,29 +106,35 @@ export default function Home({
     slidesToShow: 1,
     speed: 500,
     nextArrow: <NavigateNextIcon />,
-    prevArrow: <NavigateBeforeIcon />
-  };
+    prevArrow: <NavigateBeforeIcon />,
+  }
 
   const settingProject = {
     className: `${slickClass.center} slider variable-width`,
     infinite: true,
   }
 
-
-  const handleOnChangeSelect = (event: ChangeEvent<{
-    name?: string | undefined;
-    value: unknown;
-}>) => {
+  const handleOnChangeSelect = (
+    event: ChangeEvent<{
+      name?: string | undefined
+      value: unknown
+    }>
+  ) => {
     if (!event.target.value) return
-    
-    setSelectedBrand(event.target.value || "")
+    setMore(false)
+    setSelectedBrand(event.target.value || '')
   }
 
-
   function getColor() {
-    return "hsl(" + 360 * Math.random() + ',' +
-      (10 + 20 * Math.random()) + '%,' +
-      (78 + 10 * Math.random()) + '%)'
+    return (
+      'hsl(' +
+      360 * Math.random() +
+      ',' +
+      (10 + 20 * Math.random()) +
+      '%,' +
+      (78 + 10 * Math.random()) +
+      '%)'
+    )
   }
 
   return (
@@ -127,7 +148,7 @@ export default function Home({
           <Image
             quality="85"
             src={bannerImage}
-            alt='Wall'
+            alt="Wall"
             layout="responsive"
             width={1440}
             height={520}
@@ -139,7 +160,7 @@ export default function Home({
         <Box className={classes.banner}>
           <Image
             src={bannerMobile}
-            alt='Wall'
+            alt="Wall"
             layout="responsive"
             width={90}
             height={100}
@@ -152,8 +173,7 @@ export default function Home({
           <Box>
             <Link href={`/search?isHot`}>
               <a href={`/search?isHot`}>
-                <img src={hotVendor}
-                  alt='Titus logo' />
+                <img src={hotVendor} alt="Titus logo" />
               </a>
             </Link>
             <Typography className={classes.vendorTitle}>Shop</Typography>
@@ -162,19 +182,22 @@ export default function Home({
           <Box>
             <Link href={`/search`}>
               <a href={`/search`}>
-                <img src={newVendor}
-                  alt='Titus logo' />
+                <img src={newVendor} alt="Titus logo" />
               </a>
             </Link>
             <Typography className={classes.vendorTitle}>Shop</Typography>
           </Box>
 
           {brands.map((brand: brand) => {
-            return <Vendor
-              brandCode={brand._id}
-              bg={getColor()} key={brand._id}
-              title={brand.name}
-              imageSrc={NEXT_PUBLIC_API_URL + brand?.imagePath} />
+            return (
+              <Vendor
+                brandCode={brand._id}
+                bg={getColor()}
+                key={brand._id}
+                title={brand.name}
+                imageSrc={NEXT_PUBLIC_API_URL + brand?.imagePath}
+              />
+            )
           })}
         </Slider>
       </Box>
@@ -185,21 +208,30 @@ export default function Home({
             <img
               className={classes.mannerTitle}
               src={mannerTitle}
-              alt='Phong Cách' />
+              alt="Phong Cách"
+            />
           </Box>
 
           <Grid item xs={12}>
             <Grid container justifyContent="center" spacing={3}>
-              {manners.map((manner: manner) =>
-                <Grid className={classes.oddItem + " flex justify-center"} key={manner._id} item xs={6} lg={3}>
+              {manners.map((manner: manner) => (
+                <Grid
+                  className={classes.oddItem + ' flex justify-center'}
+                  key={manner._id}
+                  item
+                  xs={6}
+                  lg={3}
+                >
                   <Manner
                     mannerId={manner._id}
                     description={manner.description}
                     alt={manner.name}
-                    count={manner.count}
-                    src={NEXT_PUBLIC_API_URL + manner?.imagePath} />
+                    countProduct={manner.countProduct}
+                    countSupplier={manner.countSupplier}
+                    src={NEXT_PUBLIC_API_URL + manner?.imagePath}
+                  />
                 </Grid>
-              )}
+              ))}
             </Grid>
           </Grid>
         </Box>
@@ -208,80 +240,147 @@ export default function Home({
       <Box className={classes.category}>
         <Box display="flex" className="justify-between" mb={6}>
           <Box display="flex" className="items-center">
-            <Typography className={classes.cateTitle}>
-              Category
-            </Typography>
+            <Typography className={classes.cateTitle}>Category</Typography>
 
             <FormControl variant="outlined" className={classes.formControl}>
               <Select value={selectedBrand} onChange={handleOnChangeSelect}>
-                {brands?.length && brands.map((brand:brand) => <option key={brand.supId} value={brand.supId}>{ brand.name}</option>)}
+                <option className="cursor-pointer" key="All" value="All">
+                  All
+                </option>
+                {brands?.length &&
+                  brands.map((brand: brand) => (
+                    <option
+                      className="cursor-pointer"
+                      key={brand.supId}
+                      value={brand.supId}
+                    >
+                      {brand.name}
+                    </option>
+                  ))}
               </Select>
             </FormControl>
           </Box>
-          <Button variant="outlined" className={classes.btnMore}>
-            <Link href={`/search`}>
-              <a href={`/search`}>
-                Xem thêm
-              </a>
-            </Link>
+          <Button
+            disabled={more}
+            onClick={() => setMore(true)}
+            variant="outlined"
+            className={classes.btnMore}
+          >
+            Xem thêm
           </Button>
         </Box>
 
         <Grid item xs={12}>
           <Box>
             <Grid container spacing={3}>
-              {activeBrand && activeBrand.cateId.slice(0, 3).map((cate: any, idx: number) =>
-                <Grid key={cate?._id} item xs={12} md={4}>
-                <Link  href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}>
-                  <a href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}>
-                <Box style={{ background:getColor() }} className={classes.cateItem}>
-                  <Box>
-                    <Typography className={classes.cateName}>
-                     {cate?.name}
-                    </Typography>
-                    <Typography variant="body2">
-                      4000 sản phẩm
-                    </Typography>
-                  </Box>
+              {activeBrand &&
+                activeBrand.cateId.slice(0, 3).map((cate: any, idx: number) => (
+                  <Grid key={cate?._id} item xs={12} md={4}>
+                    <Link
+                      href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}
+                    >
+                      <a
+                        href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}
+                      >
+                        <Box
+                          style={{ background: getColor() }}
+                          className={classes.cateItem}
+                        >
+                          <Box>
+                            <Typography className={classes.cateName}>
+                              {cate?.name}
+                            </Typography>
+                            <Typography variant="body2">
+                              {cate?.countProduct || 0} sản phẩm
+                            </Typography>
+                          </Box>
 
-                  <Box>
-                    <img
-                      className={classes.cateImage}
-                      src={NEXT_PUBLIC_API_URL + cate?.imagePath}
-                      alt='Phong Cách' />
-                  </Box>
-                </Box>
-                </a>
-            </Link>
-            </Grid> )}
+                          <Box>
+                            <img
+                              className={classes.cateImage}
+                              src={NEXT_PUBLIC_API_URL + cate?.imagePath}
+                              alt="Phong Cách"
+                            />
+                          </Box>
+                        </Box>
+                      </a>
+                    </Link>
+                  </Grid>
+                ))}
 
-              {activeBrand && activeBrand.cateId.slice(3).map((cate: any, idx: number) =>
-                    <Grid key={cate?._id} item xs={12} md={6} lg={3}>
-                <Link href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}>
-                  <a href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}>
-                <Box style={{ background:getColor()  }} className={classes.smallCateItem}>
-                  <Box>
-                    <Typography className={classes.cateName}>
-                    {cate?.name}
-                    </Typography>
-                    <Typography variant="body2">
-                      4000 sản phẩm
-                    </Typography>
-                  </Box>
+              {activeBrand &&
+                (!more
+                  ? activeBrand.cateId.slice(3, 7).length === 4 &&
+                    activeBrand.cateId
+                      .slice(3, 7)
+                      .map((cate: any, idx: number) => (
+                        <Grid key={cate?._id} item xs={12} md={6} lg={3}>
+                          <Link
+                            href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}
+                          >
+                            <a
+                              href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}
+                            >
+                              <Box
+                                style={{ background: getColor() }}
+                                className={classes.smallCateItem}
+                              >
+                                <Box>
+                                  <Typography className={classes.cateName}>
+                                    {cate?.name}
+                                  </Typography>
+                                  <Typography variant="body2">
+                                    {cate?.countProduct || 0} sản phẩm
+                                  </Typography>
+                                </Box>
 
-                  <Box>
-                    <img
-                      className={classes.cateSmallImage}
-                      src={NEXT_PUBLIC_API_URL + cate?.imagePath}
-                      alt='Phong Cách' />
-                  </Box>
-                </Box>
-                </a>
-                </Link>
-                </Grid>
-              )}
+                                <Box>
+                                  <img
+                                    className={classes.cateSmallImage}
+                                    src={NEXT_PUBLIC_API_URL + cate?.imagePath}
+                                    alt="Phong Cách"
+                                  />
+                                </Box>
+                              </Box>
+                            </a>
+                          </Link>
+                        </Grid>
+                      ))
+                  : activeBrand.cateId
+                      .slice(3)
+                      .map((cate: any, idx: number) => (
+                        <Grid key={cate?._id} item xs={12} md={6} lg={3}>
+                          <Link
+                            href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}
+                          >
+                            <a
+                              href={`/search?supplierID=${activeBrand?._id}&cateId=${cate?._id}`}
+                            >
+                              <Box
+                                style={{ background: getColor() }}
+                                className={classes.smallCateItem}
+                              >
+                                <Box>
+                                  <Typography className={classes.cateName}>
+                                    {cate?.name}
+                                  </Typography>
+                                  <Typography variant="body2">
+                                    {cate?.countProduct || 0} sản phẩm
+                                  </Typography>
+                                </Box>
 
-
+                                <Box>
+                                  <img
+                                    className={classes.cateSmallImage}
+                                    src={NEXT_PUBLIC_API_URL + cate?.imagePath}
+                                    alt="Phong Cách"
+                                  />
+                                </Box>
+                              </Box>
+                            </a>
+                          </Link>
+                        </Grid>
+                      )))}
             </Grid>
           </Box>
         </Grid>
@@ -296,7 +395,6 @@ export default function Home({
           <Box className={classes.collabBox}>
             <Collaboration />
           </Box>
-
         </Box>
       </Box>
 
@@ -308,14 +406,13 @@ export default function Home({
         <Grid container spacing={4}>
           <Grid className={classes.whyChoiceItem} item xs={12} md={4}>
             <img src="/assets/diamiond.png" alt="Dimo" />
-            <Typography className={classes.whyChoiceTitle}>
-              Đa dạng
-            </Typography>
+            <Typography className={classes.whyChoiceTitle}>Đa dạng</Typography>
             <Typography className={classes.whyChoiceTitle}>
               mẫu thiết kế
             </Typography>
             <Typography className={classes.whyChoiceContent}>
-              Với hơn +100,000 mẫu thiết kế riêng biệt. Titus tự tin bạn luôn tìm được mẫu thiết kế phù hợp cho không gian đang hướng đến
+              Với hơn +100,000 mẫu thiết kế riêng biệt. Titus tự tin bạn luôn
+              tìm được mẫu thiết kế phù hợp cho không gian đang hướng đến
             </Typography>
           </Grid>
           <Grid className={classes.whyChoiceItem} item xs={12} md={4}>
@@ -327,81 +424,112 @@ export default function Home({
               ngân sách
             </Typography>
             <Typography className={classes.whyChoiceContent}>
-              Titus luôn sẵn sàng tư vấn và dự toán hợp lý chi phí cùng những phương án tốt nhất về ngân sách cho khách hàng
+              Titus luôn sẵn sàng tư vấn và dự toán hợp lý chi phí cùng những
+              phương án tốt nhất về ngân sách cho khách hàng
             </Typography>
           </Grid>
           <Grid className={classes.whyChoiceItem} item xs={12} md={4}>
             <img src="/assets/pen.png" alt="Dimo" />
-            <Typography className={classes.whyChoiceTitle}>
-              Bảo hành
-            </Typography>
+            <Typography className={classes.whyChoiceTitle}>Bảo hành</Typography>
             <Typography className={classes.whyChoiceTitle}>
               bảo trì dài hạn
             </Typography>
             <Typography className={classes.whyChoiceContent}>
-              Sản phẩm tốt luôn đi cùng chất lượng dịch vụ là tiêu chí hàng đầu của Titus, đối với mỗi chi tiết sản mà Titus bán ra.
+              Sản phẩm tốt luôn đi cùng chất lượng dịch vụ là tiêu chí hàng đầu
+              của Titus, đối với mỗi chi tiết sản mà Titus bán ra.
             </Typography>
           </Grid>
         </Grid>
 
-        <Typography className={classes.proTitle + " " + classes.projectTitle}>
+        <Typography className={classes.proTitle + ' ' + classes.projectTitle}>
           Dự án đã triển khai
         </Typography>
       </Box>
 
-      <Box className={slickClass.rootSliderDesktop + " " + slickClass.project}>
+      <Box className={slickClass.rootSliderDesktop + ' ' + slickClass.project}>
         <Slider {...settingsDesktop} {...settingProject}>
           <Box position="relative">
-            <img className={classes.project} src="/assets/can_ho.png" alt="can ho" />
+            <img
+              className={classes.project}
+              src="/assets/can_ho.png"
+              alt="can ho"
+            />
             <Box className={classes.projectContent} position="absolute">
-              <Typography className={classes.projectHeader}>
-                Căn hộ
-              </Typography>
-              <Typography style={{ fontSize: 12 }} className={classes.projectHeader}>
+              <Typography className={classes.projectHeader}>Căn hộ</Typography>
+              <Typography
+                style={{ fontSize: 12 }}
+                className={classes.projectHeader}
+              >
                 xem thêm
               </Typography>
             </Box>
           </Box>
           <Box position="relative">
-            <img className={classes.project} src="/assets/nha_pho.png" alt="nha pho" />
+            <img
+              className={classes.project}
+              src="/assets/nha_pho.png"
+              alt="nha pho"
+            />
             <Box className={classes.projectContent} position="absolute">
-              <Typography className={classes.projectHeader}>
-                Nhà phố
-              </Typography>
-              <Typography style={{ fontSize: 12 }} className={classes.projectHeader}>
+              <Typography className={classes.projectHeader}>Nhà phố</Typography>
+              <Typography
+                style={{ fontSize: 12 }}
+                className={classes.projectHeader}
+              >
                 xem thêm
               </Typography>
             </Box>
           </Box>
           <Box position="relative">
-            <img className={classes.project} src="/assets/biet_thu.png" alt="biet thu" />
+            <img
+              className={classes.project}
+              src="/assets/biet_thu.png"
+              alt="biet thu"
+            />
             <Box className={classes.projectContent} position="absolute">
               <Typography className={classes.projectHeader}>
                 Biệt thự
               </Typography>
-              <Typography style={{ fontSize: 12 }} className={classes.projectHeader}>
+              <Typography
+                style={{ fontSize: 12 }}
+                className={classes.projectHeader}
+              >
                 xem thêm
               </Typography>
             </Box>
           </Box>
           <Box position="relative">
-            <img className={classes.project} src="/assets/can_ho.png" alt="can ho" />
+            <img
+              className={classes.project}
+              src="/assets/can_ho.png"
+              alt="can ho"
+            />
             <Box className={classes.projectContent} position="absolute">
               <Typography className={classes.projectHeader}>
                 Homestay
               </Typography>
-              <Typography style={{ fontSize: 12 }} className={classes.projectHeader}>
+              <Typography
+                style={{ fontSize: 12 }}
+                className={classes.projectHeader}
+              >
                 xem thêm
               </Typography>
             </Box>
           </Box>
           <Box position="relative">
-            <img className={classes.project} src="/assets/can_ho.png" alt="can ho" />
+            <img
+              className={classes.project}
+              src="/assets/can_ho.png"
+              alt="can ho"
+            />
             <Box className={classes.projectContent} position="absolute">
               <Typography className={classes.projectHeader}>
                 Homestay
               </Typography>
-              <Typography style={{ fontSize: 12 }} className={classes.projectHeader}>
+              <Typography
+                style={{ fontSize: 12 }}
+                className={classes.projectHeader}
+              >
                 xem thêm
               </Typography>
             </Box>
@@ -411,19 +539,19 @@ export default function Home({
 
       <Box className={classes.news}>
         <Box className={classes.newsContainer}>
-          <Typography className={classes.newsTitle}>
-            Tin tức
-          </Typography>
+          <Typography className={classes.newsTitle}>Tin tức</Typography>
 
           <Hidden smDown>
             <Grid className={classes.newList} container spacing={2}>
               <Grid className={classes.hotNewDesktop} item xs={12}>
                 <Box className={classes.hotNewBox}>
                   <Typography className={classes.hotNewTitle}>
-                    A New Work of Art by Nathalie Du Pasquier on the Vitra Campus Pasquier on the Vitra Campus
+                    A New Work of Art by Nathalie Du Pasquier on the Vitra
+                    Campus Pasquier on the Vitra Campus
                   </Typography>
                   <Typography className={classes.hotNewDescription}>
-                    The French artis has designed Torre Numero Due, the almost three-metre-high sculpture built with the Mutina bricks
+                    The French artis has designed Torre Numero Due, the almost
+                    three-metre-high sculpture built with the Mutina bricks
                   </Typography>
                 </Box>
 
@@ -440,7 +568,8 @@ export default function Home({
                       Florim Presents the New Match-Up Ceramic Tile Collection
                     </Typography>
                     <Typography className={classes.hotNewDescription}>
-                      A balanced mix and match of styles and colours with concrete effect and marble chip effect surfaces
+                      A balanced mix and match of styles and colours with
+                      concrete effect and marble chip effect surfaces
                     </Typography>
                   </Box>
                 </Box>
@@ -453,7 +582,8 @@ export default function Home({
                       Florim Presents the New Match-Up Ceramic Tile Collection
                     </Typography>
                     <Typography className={classes.hotNewDescription}>
-                      A balanced mix and match of styles and colours with concrete effect and marble chip effect surfaces
+                      A balanced mix and match of styles and colours with
+                      concrete effect and marble chip effect surfaces
                     </Typography>
                   </Box>
                 </Box>
@@ -466,7 +596,8 @@ export default function Home({
                       Florim Presents the New Match-Up Ceramic Tile Collection
                     </Typography>
                     <Typography className={classes.hotNewDescription}>
-                      A balanced mix and match of styles and colours with concrete effect and marble chip effect surfaces
+                      A balanced mix and match of styles and colours with
+                      concrete effect and marble chip effect surfaces
                     </Typography>
                   </Box>
                 </Box>
@@ -479,7 +610,8 @@ export default function Home({
                       Florim Presents the New Match-Up Ceramic Tile Collection
                     </Typography>
                     <Typography className={classes.hotNewDescription}>
-                      A balanced mix and match of styles and colours with concrete effect and marble chip effect surfaces
+                      A balanced mix and match of styles and colours with
+                      concrete effect and marble chip effect surfaces
                     </Typography>
                   </Box>
                 </Box>
@@ -492,7 +624,8 @@ export default function Home({
                       Florim Presents the New Match-Up Ceramic Tile Collection
                     </Typography>
                     <Typography className={classes.hotNewDescription}>
-                      A balanced mix and match of styles and colours with concrete effect and marble chip effect surfaces
+                      A balanced mix and match of styles and colours with
+                      concrete effect and marble chip effect surfaces
                     </Typography>
                   </Box>
                 </Box>
@@ -505,7 +638,8 @@ export default function Home({
                       Florim Presents the New Match-Up Ceramic Tile Collection
                     </Typography>
                     <Typography className={classes.hotNewDescription}>
-                      A balanced mix and match of styles and colours with concrete effect and marble chip effect surfaces
+                      A balanced mix and match of styles and colours with
+                      concrete effect and marble chip effect surfaces
                     </Typography>
                   </Box>
                 </Box>
@@ -517,10 +651,12 @@ export default function Home({
             <Grid className={classes.newList} container>
               <Grid className={classes.hotNew} item xs={12}>
                 <Typography className={classes.hotNewTitle}>
-                  A New Work of Art by Nathalie Du Pasquier on the Vitra Campus Pasquier on the Vitra Campus
+                  A New Work of Art by Nathalie Du Pasquier on the Vitra Campus
+                  Pasquier on the Vitra Campus
                 </Typography>
                 <Typography className={classes.hotNewDescription}>
-                  The French artis has designed Torre Numero Due, the almost three-metre-high sculpture built with the Mutina bricks
+                  The French artis has designed Torre Numero Due, the almost
+                  three-metre-high sculpture built with the Mutina bricks
                 </Typography>
                 <img src="/assets/new_1.png" alt="" />
               </Grid>
@@ -528,47 +664,51 @@ export default function Home({
               <Grid className={classes.newItem} item xs={12}>
                 <img src="/assets/new_banner.png" alt="new banner" />
                 <Typography className={classes.newItemDescription}>
-                  The French artis has designed Torre Numero Due, the almost three-metre-high sculpture built with the Mutina bricks
+                  The French artis has designed Torre Numero Due, the almost
+                  three-metre-high sculpture built with the Mutina bricks
                 </Typography>
               </Grid>
               <Grid className={classes.newItem} item xs={12}>
                 <img src="/assets/new_banner.png" alt="new banner" />
                 <Typography className={classes.newItemDescription}>
-                  The French artis has designed Torre Numero Due, the almost three-metre-high sculpture built with the Mutina bricks
+                  The French artis has designed Torre Numero Due, the almost
+                  three-metre-high sculpture built with the Mutina bricks
                 </Typography>
               </Grid>
               <Grid className={classes.newItem} item xs={12}>
                 <img src="/assets/new_banner.png" alt="new banner" />
                 <Typography className={classes.newItemDescription}>
-                  The French artis has designed Torre Numero Due, the almost three-metre-high sculpture built with the Mutina bricks
+                  The French artis has designed Torre Numero Due, the almost
+                  three-metre-high sculpture built with the Mutina bricks
                 </Typography>
               </Grid>
               <Grid className={classes.newItem} item xs={12}>
                 <img src="/assets/new_banner.png" alt="new banner" />
                 <Typography className={classes.newItemDescription}>
-                  The French artis has designed Torre Numero Due, the almost three-metre-high sculpture built with the Mutina bricks
+                  The French artis has designed Torre Numero Due, the almost
+                  three-metre-high sculpture built with the Mutina bricks
                 </Typography>
               </Grid>
               <Grid className={classes.newItem} item xs={12}>
                 <img src="/assets/new_banner.png" alt="new banner" />
                 <Typography className={classes.newItemDescription}>
-                  The French artis has designed Torre Numero Due, the almost three-metre-high sculpture built with the Mutina bricks
+                  The French artis has designed Torre Numero Due, the almost
+                  three-metre-high sculpture built with the Mutina bricks
                 </Typography>
               </Grid>
               <Grid className={classes.newItem} item xs={12}>
                 <img src="/assets/new_banner.png" alt="new banner" />
                 <Typography className={classes.newItemDescription}>
-                  The French artis has designed Torre Numero Due, the almost three-metre-high sculpture built with the Mutina bricks
+                  The French artis has designed Torre Numero Due, the almost
+                  three-metre-high sculpture built with the Mutina bricks
                 </Typography>
               </Grid>
             </Grid>
           </Hidden>
-
         </Box>
       </Box>
     </>
   )
 }
-
 
 Home.Layout = Layout

@@ -20,18 +20,14 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
   const { openSidebar } = useUI()
   const [loading, setLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
-  
 
   return (
     <div className={className}>
-      <Text
-        className="pb-4 break-words w-full max-w-xl"
-        html={product.title}
-      />
-      <div className="flex flex-row justify-between items-center">
+      <Text className="pb-4 break-words w-full max-w-xl" html={product.title} />
+      {/* <div className="flex flex-row justify-between items-center">
         <Rating value={4} />
         <div className="text-accent-6 pr-1 font-medium text-sm">36 reviews</div>
-      </div>
+      </div> */}
 
       <div className="mt-6">
         {/* <Collapse title="Care">
